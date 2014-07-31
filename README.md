@@ -7,7 +7,7 @@ notorious PID is an open source fermentation temperature control program for hom
 
 ###List of physical components:
 
-- [Arduino MEGA 2560](http://www.adafruit.com/products/191)
+- [Arduino MEGA 2560](http://arduino.cc/en/Main/arduinoBoardMega2560)
 - [Adafruit data logging shield](http://www.adafruit.com/product/1141)
 - [20x4 character LCD](http://www.adafruit.com/product/198)
 - [Rotary encoder with pushbutton](http://www.adafruit.com/product/377)
