@@ -39,4 +39,6 @@ notorious PID is an open source fermentation temperature control program for hom
 
   **WiFi Connectivity** -- Connectivity to be acomplished via the Adafruit wifi breakout with external antenna.  Data will be viewable online via the Xively service.
 
+-----------------------
+
 Many thanks go to Elco Jacobs who, without even knowing it, greatly influenced the direction of this project with his work on both [UberFridge](http://www.elcojacobs.com/uberfridge/) and [brewPI](http://www.brewpi.com/).  Also, thanks to the many helpful users on both the Arduino and Adafruit forums!
