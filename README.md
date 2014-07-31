@@ -23,7 +23,7 @@ notorious PID is an open source fermentation temperature control program for hom
 
   **Cooling** --  The refrigerator compressor is switched by a differential control algorithm with time-based overshoot prediction capabilities.
 
-  **Heating** --  A second PID instance outputs a duty cycle for time proportioned conrol of a resistive heating element lining the inner chamber walls.
+  **Heating** --  A second PID instance outputs a duty cycle for time proportioned control of a resistive heating element lining the inner chamber walls.
 
 ###Additonal Features:
 
