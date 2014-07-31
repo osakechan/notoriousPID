@@ -14,6 +14,8 @@ notorious PID is an open source fermentation temperature control program for hom
 - [SainSmart 2 channel relay board](http://www.sainsmart.com/arduino-pro-mini.html)
 - 2x [DS18B20 Dallas OneWire digital temperature sensor](http://www.adafruit.com/product/381)
 - [3/8" stainless thermowell](https://www.brewershardware.com/12-Stainless-Steel-Thermowell-TWS12.html)
+- A refrigerator or chest freezer
+- [Flexwatt heat tape](http://www.calorique.com/en/flexwatt-heat-tape/)
 
 ###Control Overview:
 
