@@ -1,21 +1,21 @@
 notorious-PID
 =============
 
-PID fermentation control for AVR platforms
+##PID fermentation control for AVR platforms
 
 notorious PID is an open source fermentation temperature control program for homebrew use.  The code has been developed using the arduino IDE.
 
-List of physical components:
+#List of physical components:
 
-  Arduino MEGA 2560
-  Adafruit data logging shield
-  20x4 character LCD
-  Adafruit 24-pulse rotary encoder with pushbutton
-  SainSmart 2 channel relay board
-  2x DS18B20 Dallas OneWire digital temperature sensor
-  3/8" stainless thermowell
+ -Arduino MEGA 2560
+ -Adafruit data logging shield
+ -20x4 character LCD
+ -Adafruit 24-pulse rotary encoder with pushbutton
+ -SainSmart 2 channel relay board
+ -2x DS18B20 Dallas OneWire digital temperature sensor
+ -3/8" stainless thermowell
 
-Control Overview:
+#Control Overview:
 
   A standard PID control algorithm outputs the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements are the refrigerator compressor and resistive heating element.  Temperature sensing is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion with up to 12-bit resolution.  Potentially limitless numbers of Dallas OneWire Sensors may be attached via a single digital input in on the AVR.
 
@@ -23,7 +23,7 @@ Control Overview:
 
   Heating --  A second PID instance outputs a duty cycle for time proportioned conrol of a resistive heating element lining the inner chamber walls.
 
-Additonal Features:
+#Additonal Features:
 
   EEPROM storage -- notorious PID stores vital program states and settings in non-volatile EEPROM memory space.  If power is lost or the arduino reboots via the reset button, previous settings can be recalled from EEPROM at startup.
 
@@ -33,6 +33,8 @@ Additonal Features:
   
   Failsafe -- An infinite loop or other AVR lock-up could lead to a loss of control of the final control elements.  To prevent an AVR failure from leading to unsafe operation, notorious PID makes use of the Watchdog timer feature of arduino (and similar) boards.  The Watchdog is an onboard countdown timer that will reboot the arduino if it has not recieved a reset pulse from the AVR within a set time.
   
-Future Features:
+#Future Features:
 
   WiFi Connectivity -- Connectivity to be acomplished via the Adafruit wifi breakout with external antenna.  Data will be viewable online via the Xively service.
+
+Many thanks go to Elco Jacobs who, without even knowing it, greatly influenced the direction of this project with his work on both UberFridge and brewPI.
