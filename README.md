@@ -7,13 +7,13 @@ notorious PID is an open source fermentation temperature control program for hom
 
 ###List of physical components:
 
-- Arduino MEGA 2560
-- Adafruit data logging shield
-- 20x4 character LCD
-- Adafruit 24-pulse rotary encoder with pushbutton
-- SainSmart 2 channel relay board
-- 2x DS18B20 Dallas OneWire digital temperature sensor
-- 3/8" stainless thermowell
+- [Arduino MEGA 2560](http://www.adafruit.com/products/191)
+- [Adafruit data logging shield](http://www.adafruit.com/product/1141)
+- [20x4 character LCD](http://www.adafruit.com/product/198)
+- [Rotary encoder with pushbutton](http://www.adafruit.com/product/377)
+- [SainSmart 2 channel relay board](http://www.sainsmart.com/arduino-pro-mini.html)
+- 2x [DS18B20 Dallas OneWire digital temperature sensor](http://www.adafruit.com/product/381)
+- [3/8" stainless thermowell](https://www.brewershardware.com/12-Stainless-Steel-Thermowell-TWS12.html)
 
 ###Control Overview:
 
