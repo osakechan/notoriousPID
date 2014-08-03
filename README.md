@@ -21,6 +21,7 @@ notorious PID is an open source fermentation temperature control program for hom
 ![nPID wiring diagram](https://raw.githubusercontent.com/osakechan/notorious-PID/master/img/nPID%20wiring%20layout.png)
 
 *a couple notes about the above diagram:*
+- the prototyping shield has been substituted for the adafruit data logging shield (same footprint)
 - this project uses a 20x4 character lcd (shown is the stock 16x2)
 - the rotary encoder linked to adafruit incorporates a pushbutton (shown seperate)
 - there is no template for the sainsmart relay board but wiring should be straight-foraward
