@@ -23,7 +23,9 @@ notorious PID is an open source fermentation temperature control program for hom
 *a couple notes about the above diagram:*
 - the prototyping shield has been substituted for the adafruit data logging shield (same footprint)
 - this project uses a 20x4 character lcd with backlight (shown is the stock 16x2)
-- the rotary encoder linked to adafruit incorporates a pushbutton (shown seperate)
+- the lcd utilizes a trim-pot to adjust contrast (dashed blue wire)
+- the rotary encoder from adafruit incorporates a pushbutton (shown seperate)
+- the onewire data line requires a 4.7kohm pullup (dashed green wire)
 - there is no template for the sainsmart relay board but wiring should be straight-foraward
 
 ###Control Overview:
