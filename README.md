@@ -5,7 +5,7 @@ PID fermentation control for AVR platforms
 
 notorious PID is an open source fermentation temperature control program for homebrew use.  The code has been developed using the arduino IDE.
 
-###List of physical components:
+###List of Physical Components:
 
 - [Arduino MEGA 2560](http://arduino.cc/en/Main/arduinoBoardMega2560)
 - [Adafruit data logging shield](http://www.adafruit.com/product/1141)
@@ -16,6 +16,14 @@ notorious PID is an open source fermentation temperature control program for hom
 - [3/8" stainless thermowell](https://www.brewershardware.com/12-Stainless-Steel-Thermowell-TWS12.html)
 - [A refrigerator or chest freezer](http://www.craigslist.org/about/sites)
 - [Flexwatt heat tape](http://www.calorique.com/en/flexwatt-heat-tape/)
+
+###Wiring It Up:
+![nPID wiring diagram](https://raw.githubusercontent.com/osakechan/notorious-PID/master/img/nPID%20wiring%20layout.png)
+
+*a couple notes about the above diagram:*
+- this project uses a 20x4 character lcd (shown is the stock 16x2)
+- the rotary encoder linked to adafruit incorporates a pushbutton (shown seperate)
+- there is no template for the sainsmart relay board but wiring should be straight-foraward
 
 ###Control Overview:
 
