@@ -27,7 +27,7 @@ notorious PID is an open source fermentation temperature control program for hom
 - the rotary encoder from adafruit incorporates a pushbutton (shown seperate)
 - the onewire data line requires a 4.7kohm pullup (dashed green wire)
 - external power *must* be supplied to the onewire sensors (cannot use parasite power)
-- there is no template for the sainsmart relay board but wiring should be straight-foraward
+- there is no template for the sainsmart relay board but wiring should be straight-forward
 
 ###Control Overview:
 
