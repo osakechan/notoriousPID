@@ -100,8 +100,8 @@ const byte onewireData = A1;  // one-wire data
 const byte relay1 = A2;       // relay 1 (fridge compressor)
 const byte relay2 = A3;       // relay 2 (heating element)
 
-volatile char encoderPos;    // a counter for the rotary encoder dial
-volatile byte encoderState;  // 3 bit-flag encoder state (A Channel)(B Channel)(is rotating)
+volatile char encoderPos = 0;          // a counter for the rotary encoder dial
+volatile byte encoderState = 0b000;    // 3 bit-flag encoder state (A Channel)(B Channel)(is rotating)
 
 OneWire onewire(onewireData);  // define instance of the OneWire class to communicate with onewire sensors
 probe beer(&onewire), fridge(&onewire);
