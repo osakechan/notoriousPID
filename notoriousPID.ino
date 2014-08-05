@@ -36,12 +36,12 @@ void setup() {
 
   Wire.begin();              // initialize rtc communication
   RTC.begin();               // start real time clock
-  lcd.createChar(0, delta);  // create custom delta characters for LCD (slots 0-7)
-  lcd.createChar(1, rightArrow);
-  lcd.createChar(2, disc);
-  lcd.createChar(3, circle);
-  lcd.createChar(4, dot);
-  lcd.createChar(5, inverted);
+  lcd.createChar(0, (uint8_t*)delta);  // create custom delta characters for LCD (slots 0-7)
+  lcd.createChar(1, (uint8_t*)rightArrow);
+  lcd.createChar(2, (uint8_t*)disc);
+  lcd.createChar(3, (uint8_t*)circle);
+  lcd.createChar(4, (uint8_t*)dot);
+  lcd.createChar(5, (uint8_t*)inverted);
   lcd.begin(20, 4);          // initialize lcd display
   if (SD.begin(chipSelect, mosi, miso, sck)) lcd.print(F("SDCard Init Success"));  // verify and initialize SD card
     else lcd.print(F("SDCard Failed/Absent"));

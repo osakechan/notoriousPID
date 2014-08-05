@@ -16,7 +16,7 @@ const byte delta[8] =  // custom delta character for LCD
   B00000
 };
 
-const byte rightArrow[8] =
+const uint8_t rightArrow[8] =
 {
   B11000,
   B10100,
