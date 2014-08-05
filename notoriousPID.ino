@@ -27,6 +27,8 @@ void setup() {
     digitalWrite(relay2, HIGH);
   attachInterrupt(0, encoderChanA, CHANGE);  // interrupt 0 (pin 2) triggered by change
   attachInterrupt(1, encoderChanB, CHANGE);  // interrupt 1 (pin 3) triggered by change
+  encoderPos = 0;
+  encoderState = 0b000;
   encoderChanA();  // call interrupt routines once to init rotary encoder
   encoderChanB();
 
