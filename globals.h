@@ -4,7 +4,7 @@
 #define DEBUG true    // debug flag tells compiler to include serial output debuging code via #if compiler directives
 const int EEPROM_VER = 11;  // eeprom data tracking
 
-byte delta[8] =  // custom delta character for LCD
+const byte delta[8] =  // custom delta character for LCD
 {
   B00000,
   B00000,
@@ -16,7 +16,7 @@ byte delta[8] =  // custom delta character for LCD
   B00000
 };
 
-byte rightArrow[8] =
+const byte rightArrow[8] =
 {
   B11000,
   B10100,
@@ -28,7 +28,7 @@ byte rightArrow[8] =
   B00000
 };
 
-byte disc[8] =
+const byte disc[8] =
 {
   B01110,
   B11111,
@@ -40,7 +40,7 @@ byte disc[8] =
   B00000
 };
 
-byte dot[8] =
+const byte dot[8] =
 {
   B00000,
   B00000,
@@ -52,7 +52,7 @@ byte dot[8] =
   B00000
 };
 
-byte circle[8] =
+const byte circle[8] =
 {
   B01110,
   B10001,
@@ -64,7 +64,7 @@ byte circle[8] =
   B00000
 };
 
-byte inverted[8] =
+const byte inverted[8] =
 {
   B11111,
   B11111,
@@ -76,10 +76,10 @@ byte inverted[8] =
   B11111
 };
 
-enum opState {  // fridge operation states
-  IDLE,
-  COOL,
-  HEAT,
+struct profileStep {  // struct to encapsulate temperature and duration for fermentation profiles
+  double temp;
+  double duration;
+  profileStep() : temp(0), duration(0) {}
 };
 
 // arduino pin declarations:
@@ -102,21 +102,6 @@ const byte relay2 = A3;       // relay 2 (heating element)
 
 volatile char encoderPos = 0;          // a counter for the rotary encoder dial
 volatile byte encoderState = 0b000;    // 3 bit-flag encoder state (A Channel)(B Channel)(is rotating)
-
-byte fridgeState[2] = { IDLE, IDLE };    // [0] - current fridge state; [1] - fridge state t - 1 history
-const double fridgeIdleDiff = 0.5;       // constrain fridge temperature to +/- 0.5 deg F differential
-const double fridgePeakDiff = 1;         // constrain allowed peak error to +/- 1 deg F differential
-const unsigned int coolMinOff = 300;     // minimum compressor off time, seconds (5 min)
-const unsigned int coolMinOn = 120;      // minimum compressor on time, seconds (2 min)
-const unsigned int coolMaxOn = 2700;     // maximum compressor on time, seconds (45 min)
-const unsigned int peakMaxTime = 1200;   // maximum runTime to consider for peak estimation, seconds (20 min)
-const unsigned int peakMaxWait = 1800;   // maximum wait on peak, seconds (30 min)
-const unsigned int heatMinOff = 300;     // minimum HEAT off time, seconds (5 min)
-const unsigned int heatWindow = 300000;  // window size for HEAT time proportioning, ms (5 min)
-double peakEstimator = 5;     // to predict COOL overshoot; units of deg F per hour (always positive)
-double peakEstimate = 0;      // to determine prediction error = (estimate - actual)
-unsigned long startTime = 0;  // timing variables for enforcing min/max cycling times
-unsigned long stopTime = 0;
 
 OneWire onewire(onewireData);  // define instance of the OneWire class to communicate with onewire sensors
 probe beer(&onewire), fridge(&onewire);

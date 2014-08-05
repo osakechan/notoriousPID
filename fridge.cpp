@@ -1,4 +1,12 @@
-void updateFridge() {                  // maintain fridge at temperature set by mainPID -- COOLing with predictive differential, HEATing with time proportioned heatPID
+#include "fridge.h"
+
+byte fridgeState[2] = { IDLE, IDLE };      // [0] - current fridge state; [1] - fridge state t - 1 history
+double peakEstimator = 5;     // to predict COOL overshoot; units of deg F per hour (always positive)
+double peakEstimate = 0;      // to determine prediction error = (estimate - actual)
+unsigned long startTime = 0;  // timing variables for enforcing min/max cycling times
+unsigned long stopTime = 0;
+
+void updateFridge() {        // maintain fridge at temperature set by mainPID -- COOLing with predictive differential, HEATing with time proportioned heatPID
   switch (fridgeState[0]) {  // MAIN switch -- IDLE/peak detection, COOL, HEAT routines
     default:
     case IDLE:
@@ -16,7 +24,7 @@ void updateFridge() {                  // maintain fridge at temperature set by 
         }
       }
       else if (fridgeState[1] == COOL) {  // do peak detect if waiting on COOL
-        if (fridge.peakDetect()) {               // negative peak detected...
+        if (fridge.peakDetect()) {        // negative peak detected...
           tuneEstimator(&peakEstimator, peakEstimate - fridge.getFilter());  // (error = estimate - actual) positive error requires larger estimator; negative:smaller
           fridgeState[1] = IDLE;          // stop peak detection until next COOL cycle completes
         }
