@@ -1,7 +1,6 @@
 #ifndef GLOBALS_H  // ensure this file is included only once
 #define GLOBALS_H
 
-#define DEBUG true    // debug flag tells compiler to include serial output debuging code via #if compiler directives
 const int EEPROM_VER = 11;  // eeprom data tracking
 
 const byte delta[8] =  // custom delta character for LCD

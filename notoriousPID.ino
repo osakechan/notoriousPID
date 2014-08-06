@@ -15,6 +15,37 @@
 #include "EEPROMio.h"
 #include "fridge.h"
 #include "globals.h"
+#define DEBUG true  // debug flag for including debugging code
+
+void mainUpdate();  // update sensors, PID output, fridge state, write to log, run profiles
+
+boolean updateProfile();  // update temperature profile
+void writeLog();          // write new line to log file
+void dateTime(uint16_t* date, uint16_t* time);  // date/time callback function for SdFat to timestamp file creation/modification
+
+void initDisplay();    // print static characters to LCD (lables, scrollbar, page names, etc)
+void updateDisplay();  // print dynamic characters to LCD (PID/temp values, etc)
+
+void menu();       // change PID and program settings
+void mainPIDmode();  // mainPID manual/automatic
+void mainPIDsp();    // mainPID setpoint
+void heatPIDmode();  // heatPID manual/automatic
+void dataLog();      // data logging
+void tempProfile();  // temperature profiles
+void tempUnit();     // temperature display units C/F
+void avrReset();     // restore default settings and reset
+void backOut();    // finalize changes and leave menu
+
+void EEPROMReadSettings();   // read saved settings from EEPROM
+void EEPROMWriteSettings();  // write current settings to EEPROM
+void EEPROMWritePresets();   // write default settings to EEPROM
+
+void encoderChanA();  // manage encoder pin A transitions
+void encoderChanB();  // manage encoder pin B transitions
+
+#if DEBUG == true
+int freeRAM();  // approximate free SRAM for debugging
+#endif
 
 void setup() {
   pinMode(chipSelect, OUTPUT);  // select pin i/o and enable pullup resistors
@@ -119,7 +150,7 @@ void loop() {
   if (!digitalRead(pushButton)) menu();  // call menu routine on rotary button-press
 }
 
-void mainUpdate () {                             // call all update subroutines
+void mainUpdate() {                              // call all update subroutines
   probe::startConv();                            // start conversion for all sensors
   if (probe::isReady()) {                        // update sensors when conversion complete
     fridge.update();
@@ -132,7 +163,7 @@ void mainUpdate () {                             // call all update subroutines
   if (programState & 0b000010) writeLog();       // if data capture enabled, run logging routine
 }
 
-boolean updateProfile() {             // update temperature profile
+boolean updateProfile() {
   static unsigned int step = 0;
   static unsigned long lastStep = 0;  // last profile step (ms)
   static profileStep Step;            // current profile step
@@ -200,7 +231,7 @@ void writeLog() {
   }
 }
 
-void dateTime(uint16_t* date, uint16_t* time) {  // date/time callback function for SdFat library for timestamping file creation/modification
+void dateTime(uint16_t* date, uint16_t* time) {
   DateTime now = RTC.now();
   *date = FAT_DATE(now.year(), now.month(), now.day());
   *time = FAT_TIME(now.hour(), now.minute(), now.second());
@@ -1211,7 +1242,7 @@ void encoderChanB() {  // interrupt for rotary encoder B channel
 }
 
 #if DEBUG == true
-int freeRAM () {
+int freeRAM() {
   extern int __heap_start, *__brkval;
   int v;
   return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
