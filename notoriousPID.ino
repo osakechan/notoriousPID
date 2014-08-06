@@ -1,4 +1,4 @@
-// Notorious PID Fermentation Temperature Control v 1.0
+// Notorious PID Fermentation Temperature Control v 0.9
 #include "Arduino.h"
 #include <avr/wdt.h>
 #include <LiquidCrystal.h>

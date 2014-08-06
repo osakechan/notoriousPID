@@ -1,4 +1,4 @@
-#ifndef GLOBALS_H  // ensure this file is included only once
+#ifndef GLOBALS_H
 #define GLOBALS_H
 
 const int EEPROM_VER = 11;  // eeprom data tracking
