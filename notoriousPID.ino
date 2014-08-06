@@ -75,6 +75,8 @@ void setup() {
   lcd.createChar(3, (uint8_t*)circle);
   lcd.createChar(4, (uint8_t*)dot);
   lcd.createChar(5, (uint8_t*)inverted);
+  lcd.createChar(6, (uint8_t*)degc);
+  lcd.createChar(7, (uint8_t*)degf);
   lcd.begin(20, 4);          // initialize lcd display
   if (SD.begin(chipSelect, mosi, miso, sck)) lcd.print(F("SDCard Init Success"));  // verify and initialize SD card
     else lcd.print(F("SDCard Failed/Absent"));

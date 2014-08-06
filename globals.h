@@ -3,8 +3,8 @@
 
 const int EEPROM_VER = 11;  // eeprom data tracking
 
-const byte delta[8] =  // custom delta character for LCD
-{
+// custom characters for LCD
+const byte delta[8] = {
   B00000,
   B00000,
   B00000,
@@ -15,8 +15,7 @@ const byte delta[8] =  // custom delta character for LCD
   B00000
 };
 
-const uint8_t rightArrow[8] =
-{
+const uint8_t rightArrow[8] = {
   B11000,
   B10100,
   B10010,
@@ -27,8 +26,7 @@ const uint8_t rightArrow[8] =
   B00000
 };
 
-const byte disc[8] =
-{
+const byte disc[8] = {
   B01110,
   B11111,
   B11111,
@@ -39,8 +37,7 @@ const byte disc[8] =
   B00000
 };
 
-const byte dot[8] =
-{
+const byte dot[8] = {
   B00000,
   B00000,
   B00100,
@@ -51,8 +48,7 @@ const byte dot[8] =
   B00000
 };
 
-const byte circle[8] =
-{
+const byte circle[8] = {
   B01110,
   B10001,
   B10001,
@@ -63,8 +59,7 @@ const byte circle[8] =
   B00000
 };
 
-const byte inverted[8] =
-{
+const byte inverted[8] = {
   B11111,
   B11111,
   B11111,
@@ -73,6 +68,28 @@ const byte inverted[8] =
   B11111,
   B11111,
   B11111
+};
+
+const byte degc[8] = {
+  B01000,
+  B10100,
+  B01000,
+  B00011,
+  B00100,
+  B00100,
+  B00011,
+  B00000
+};
+ 
+const byte degf[8] = {
+  B01000,
+  B10100,
+  B01000,
+  B00011,
+  B00100,
+  B00111,
+  B00100,
+  B00000
 };
 
 struct profileStep {  // struct to encapsulate temperature and duration for fermentation profiles
