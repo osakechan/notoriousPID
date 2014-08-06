@@ -123,6 +123,13 @@ OneWire onewire(onewireData);  // declare instance of the OneWire class to commu
 probe beer(&onewire), fridge(&onewire);
 
 byte programState;  // 6 bit-flag program state -- (mainPID manual/auto)(heatPID manual/auto)(temp C/F)(fermentation profile on/off)(data capture on/off)(file operations) = 0b000000
+#define MAIN_PID_MODE 0b100000
+#define HEAT_PID_MODE 0b010000
+#define DISPLAY_UNIT 0b001000
+#define TEMP_PROFILE 0b000100
+#define DATA_LOGGING 0b000010
+#define FILE_OPS 0b000001
+
 double Input, Setpoint, Output, Kp, Ki, Kd;  // SP, PV, CO, tuning params for main PID
 double heatInput, heatOutput, heatSetpoint, heatKp, heatKi, heatKd;  // SP, PV, CO tuning params for HEAT PID
 PID mainPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);  // main PID instance for beer temp control (DIRECT: beer temperature ~ fridge(air) temperature)

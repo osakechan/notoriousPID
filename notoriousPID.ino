@@ -111,7 +111,7 @@ void setup() {
   mainPID.SetTunings(Kp, Ki, Kd);    // set tuning params
   mainPID.SetSampleTime(1000);       // (ms) matches fast sample rate (1 hz)
   mainPID.SetOutputLimits(0.3, 38);  // deg C (~32.5 - ~100 deg F)
-  if (programState & 0b100000) mainPID.SetMode(AUTOMATIC);  // set man/auto
+  if (programState & MAIN_PID_MODE) mainPID.SetMode(AUTOMATIC);  // set man/auto
     else mainPID.SetMode(MANUAL);
   mainPID.setOutputType(FILTERED);
   mainPID.setFilterConstant(10);
@@ -120,7 +120,7 @@ void setup() {
   heatPID.SetTunings(heatKp, heatKi, heatKd);
   heatPID.SetSampleTime(heatWindow);       // sampletime = time proportioning window length
   heatPID.SetOutputLimits(0, heatWindow);  // heatPID output = duty time per window
-  if (programState & 0b010000) heatPID.SetMode(AUTOMATIC);
+  if (programState & HEAT_PID_MODE) heatPID.SetMode(AUTOMATIC);
     else heatPID.SetMode(MANUAL);
   heatPID.initHistory();
 
@@ -159,10 +159,10 @@ void mainUpdate() {                              // call all update subroutines
     beer.update();
     Input = beer.getFilter();
   }
-  if (programState & 0b000100) updateProfile();  // update main Setpoint if fermentation profile active
+  if (programState & TEMP_PROFILE) updateProfile();  // update main Setpoint if fermentation profile active
   mainPID.Compute();                             // update main PID
   updateFridge();                                // update fridge status
-  if (programState & 0b000010) writeLog();       // if data capture enabled, run logging routine
+  if (programState & DATA_LOGGING) writeLog();       // if data capture enabled, run logging routine
 }
 
 boolean updateProfile() {
@@ -334,19 +334,19 @@ void initDisplay() {
 
 void updateDisplay() {
   lcd.setCursor(9, 0);
-  if (programState & 0b001000) lcd.print(F("\337F "));
+  if (programState & DISPLAY_UNIT) lcd.print(F("\337F "));
     else lcd.print(F("\337C "));
-  if (programState & 0b000100) lcd.print(F("PGM "));
+  if (programState & TEMP_PROFILE) lcd.print(F("PGM "));
   else {
-    if (programState & 0b100000) lcd.print(F("A "));
+    if (programState & MAIN_PID_MODE) lcd.print(F("A "));
       else lcd.print(F("M "));
-    if (programState & 0b010000) lcd.print(F("A "));
+    if (programState & HEAT_PID_MODE) lcd.print(F("A "));
       else lcd.print(F("M "));
   }
   if (getFridgeState(0) == IDLE) lcd.print(F("I "));
   if (getFridgeState(0) == HEAT) lcd.print(F("H "));
   if (getFridgeState(0) == COOL) lcd.print(F("C "));
-  if (programState & 0b000010) lcd.print(F("SD"));
+  if (programState & DATA_LOGGING) lcd.print(F("SD"));
     else { lcd.write((byte)5); lcd.write((byte)5); }
   if (!encoderPos) {
     DateTime time = RTC.now();
@@ -360,7 +360,7 @@ void updateDisplay() {
     lcd.print(time.second()/10 % 6);
     lcd.print(time.second() % 10);
   }
-  if (programState & 0b001000) {  // temperature units = deg F
+  if (programState & DISPLAY_UNIT) {  // temperature units = deg F
     switch (encoderPos) {         // perform conversion for display
       default:
       case 0:
@@ -587,7 +587,7 @@ void menu() {
 }
 
 void mainPIDmode() {
-  if (programState & 0b000100) {
+  if (programState & TEMP_PROFILE) {
     lcd.setCursor(0, 2);
     lcd.print(F(" PROFILE IS RUNNING "));
     unsigned long start = millis();
@@ -595,7 +595,7 @@ void mainPIDmode() {
     return;
   }
   char listSize = 2;
-  encoderPos = (programState & 0b100000) >> 5;
+  encoderPos = (programState & MAIN_PID_MODE) >> 5;
   char lastReportedPos = encoderPos + 1;
   lcd.setCursor(0, 2);
   lcd.print(F("                    "));
@@ -621,12 +621,12 @@ void mainPIDmode() {
     Serial.println(F(" bytes free SRAM remaining"));
   #endif
 
-  if (encoderPos) {programState |= 0b100000;}  // set main PID to automatic mode
+  if (encoderPos) {programState |= MAIN_PID_MODE;}  // set main PID to automatic mode
   else {  // set main PID to manual mode; user entry of main Output for manual only
-    programState &= 0b011111;
+    programState &= ~MAIN_PID_MODE;
     do {wdt_reset(); mainUpdate();} while (!digitalRead(pushButton));
     char listSize = 100;
-    if (programState & 0b001000) Output = probe::tempCtoF(Output);  // if display unit = deg F, convert Output
+    if (programState & DISPLAY_UNIT) Output = probe::tempCtoF(Output);  // if display unit = deg F, convert Output
     encoderPos = int(Output);
     char lastReportedPos = encoderPos + 1;
     lcd.setCursor(3, 2);
@@ -639,7 +639,7 @@ void mainPIDmode() {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
         lcd.print(encoderPos + Output - int(Output));
-        if (programState & 0b001000) lcd.print(F(" \337F"));
+        if (programState & DISPLAY_UNIT) lcd.print(F(" \337F"));
           else lcd.print(F(" \337C"));
         lastReportedPos = encoderPos;
       }
@@ -661,7 +661,7 @@ void mainPIDmode() {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
         lcd.print(Output + double(encoderPos)/10);
-        if (programState & 0b001000) lcd.print(F(" \337F"));
+        if (programState & DISPLAY_UNIT) lcd.print(F(" \337F"));
           else lcd.print(F(" \337C"));
         lastReportedPos = encoderPos;
       }
@@ -670,7 +670,7 @@ void mainPIDmode() {
     } while (digitalRead(pushButton));
     lcd.noCursor();
     Output = Output + double(encoderPos)/10; 
-    if (programState & 0b001000) Output = probe::tempFtoC(Output);  // if display is in deg F, convert user entry back to native deg C
+    if (programState & DISPLAY_UNIT) Output = probe::tempFtoC(Output);  // if display is in deg F, convert user entry back to native deg C
     Output = constrain(Output, 0.3, 38);  // constrain main PID Output to allowed range 0.3 - 38 deg C (~32.5 - ~100 deg F)
   }
             
@@ -684,7 +684,7 @@ void mainPIDmode() {
 }
 
 void mainPIDsp() {
-  if (programState & 0b000100) {
+  if (programState & TEMP_PROFILE) {
     lcd.setCursor(0, 2);
     lcd.print(F(" PROFILE IS RUNNING "));
     unsigned long start = millis();
@@ -696,7 +696,7 @@ void mainPIDsp() {
   lcd.setCursor(2, 2);
   lcd.write((byte)1);
   char listSize = 100;
-  if (programState & 0b001000) Setpoint = probe::tempCtoF(Setpoint);
+  if (programState & DISPLAY_UNIT) Setpoint = probe::tempCtoF(Setpoint);
   encoderPos = int(Setpoint);
   char lastReportedPos = encoderPos + 1;
   do {  // coarse-grained ajustment (integers)
@@ -707,7 +707,7 @@ void mainPIDsp() {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(3, 2);
       lcd.print(encoderPos + Setpoint - int(Setpoint));
-      if (programState & 0b001000) lcd.print(F(" \337F"));
+      if (programState & DISPLAY_UNIT) lcd.print(F(" \337F"));
         else lcd.print(F(" \337C"));
       lastReportedPos = encoderPos;
     }
@@ -730,7 +730,7 @@ void mainPIDsp() {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(3, 2);
       lcd.print(Setpoint + double(encoderPos)/10);
-      if (programState & 0b001000) lcd.print(F(" \337F"));
+      if (programState & DISPLAY_UNIT) lcd.print(F(" \337F"));
         else lcd.print(F(" \337C"));
       lastReportedPos = encoderPos;
     }
@@ -739,7 +739,7 @@ void mainPIDsp() {
   } while (digitalRead(pushButton));
   lcd.noCursor();
   Setpoint = Setpoint + double(encoderPos)/10;
-  if (programState & 0b001000) Setpoint = probe::tempFtoC(Setpoint);
+  if (programState & DISPLAY_UNIT) Setpoint = probe::tempFtoC(Setpoint);
 
   #if DEBUG == true
     Serial.print(F("main PID Setpoint set to:"));
@@ -751,7 +751,7 @@ void mainPIDsp() {
 }
 
 void heatPIDmode() {
-  if (programState & 0b000100) {
+  if (programState & TEMP_PROFILE) {
     lcd.setCursor(0, 2);
     lcd.print(F(" PROFILE IS RUNNING "));
     unsigned long start = millis();
@@ -759,7 +759,7 @@ void heatPIDmode() {
     return;
   }
   char listSize = 2;
-  encoderPos = (programState & 0b010000) >> 4;
+  encoderPos = (programState & HEAT_PID_MODE) >> 4;
   char lastReportedPos = encoderPos + 1;
   lcd.setCursor(0, 2);
   lcd.print(F("                    "));
@@ -785,12 +785,12 @@ void heatPIDmode() {
     Serial.println(F(" bytes free SRAM remaining"));
   #endif
 
-  if (encoderPos) programState |= 0b010000;  // set heat PID to automatic mode
+  if (encoderPos) programState |= HEAT_PID_MODE;  // set heat PID to automatic mode
   else {  // set heat PID to manual mode; user entry of heat Output for manual only
-    programState &= 0b101111;
+    programState &= ~HEAT_PID_MODE;
     do {wdt_reset(); mainUpdate();} while (!digitalRead(pushButton));
     char listSize = 100;
-    if (programState & 0b001000) heatSetpoint = probe::tempCtoF(heatSetpoint);
+    if (programState & DISPLAY_UNIT) heatSetpoint = probe::tempCtoF(heatSetpoint);
     encoderPos = int(heatSetpoint);
     char lastReportedPos = encoderPos + 1;
     lcd.setCursor(3, 2);
@@ -803,7 +803,7 @@ void heatPIDmode() {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
         lcd.print(encoderPos + heatSetpoint - int(heatSetpoint));
-        if (programState & 0b001000) lcd.print(F(" \337F"));
+        if (programState & DISPLAY_UNIT) lcd.print(F(" \337F"));
           else lcd.print(F(" \337C"));
         lastReportedPos = encoderPos;
       }
@@ -826,7 +826,7 @@ void heatPIDmode() {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
         lcd.print(heatSetpoint + double(encoderPos)/10);
-        if (programState & 0b001000) lcd.print(F(" \337F"));
+        if (programState & DISPLAY_UNIT) lcd.print(F(" \337F"));
           else lcd.print(F(" \337C"));
         lastReportedPos = encoderPos;
       }
@@ -835,7 +835,7 @@ void heatPIDmode() {
     } while (digitalRead(pushButton));
     lcd.noCursor();
     heatSetpoint = heatSetpoint + double(encoderPos)/10; 
-    if (programState & 0b001000) heatSetpoint = probe::tempFtoC(heatSetpoint);
+    if (programState & DISPLAY_UNIT) heatSetpoint = probe::tempFtoC(heatSetpoint);
   }
 
   #if DEBUG == true
@@ -849,7 +849,7 @@ void heatPIDmode() {
 
 void dataLog() {
   char listSize = 2;
-  encoderPos = (programState & 0b000010) >> 1;
+  encoderPos = (programState & DATA_LOGGING) >> 1;
   char lastReportedPos = encoderPos + 1;
   lcd.setCursor(0, 2);
   lcd.print(F("                    "));
@@ -868,49 +868,49 @@ void dataLog() {
     }
   } while (digitalRead(pushButton));
   if (encoderPos) {
-    if (!(programState & 0b000011)) {
+    if (!(programState & (DATA_LOGGING + FILE_OPS))) {
       #if DEBUG == true
         Serial.print(F("New logfile pending... "));
         Serial.print(freeRAM());
         Serial.println(F(" bytes free SRAM remaining"));
       #endif
 
-      programState += 3;  // start new LogFile on menu exit
+      programState += DATA_LOGGING + FILE_OPS;  // start new LogFile on menu exit
     }
-    else if ((programState & 0b000011) == 1) {
+    else if ((programState & (DATA_LOGGING + FILE_OPS) == FILE_OPS) {
       #if DEBUG == true
         Serial.print(F("Pending close operation canceled... "));
         Serial.print(freeRAM());
         Serial.println(F(" bytes free SRAM remaining"));
       #endif
                 
-      programState = programState & 0b111100 + 2;  // cancel pending file close and leave log running
+      programState = programState & ~(DATA_LOGGING + FILE_OPS) + DATA_LOGGING;  // cancel pending file close and leave log running
     }
   }
   else {
-    if ((programState & 0b000011) == 2) {
+    if ((programState & (DATA_LOGGING + FILE_OPS)) == DATA_LOGGING) {
       #if DEBUG == true
         Serial.print(F("Logfile close pending... "));
         Serial.print(freeRAM());
         Serial.println(F(" bytes free SRAM remaining"));
       #endif
               
-      programState = (programState & 0b111100) + 1;  // close current LogFile on menu exit
+      programState = (programState & ~(DATA_LOGGING + FILE_OPS)) + FILE_OPS;  // close current LogFile on menu exit
     }
-    else if ((programState & 0b000011) == 3) {
+    else if ((programState & (DATA_LOGGING + FILE_OPS)) == DATA_LOGGING + FILE_OPS) {
       #if DEBUG == true
         Serial.print(F("Pending new operation canceled... "));
         Serial.print(freeRAM());
         Serial.println(F(" bytes free SRAM remaining"));
       #endif
 
-      programState &= 0b111100;  // cancel pending file opening
+      programState &= ~(DATA_LOGGING + FILE_OPS);  // cancel pending file opening
     }
   }
 }
 
 void tempProfile() {              // manage SP profiles
-  if (programState & 0b000100) {  // if profile already running
+  if (programState & TEMP_PROFILE) {  // if profile already running
     char listSize = 2;
     encoderPos = 0;
     char lastReportedPos = 1;
@@ -931,7 +931,7 @@ void tempProfile() {              // manage SP profiles
       }
     } while (digitalRead(pushButton));
     if (encoderPos) {  // empty profile queue, reset program flag and return to main menu
-      programState &= 0b111011;
+      programState &= ~TEMP_PROFILE;
       while (!profile.isEmpty()) {
         wdt_reset();
         mainUpdate();
@@ -999,7 +999,7 @@ void tempProfile() {              // manage SP profiles
       Step.duration = strtod(buff, 0);
       if (Step.temp || Step.duration) profile.push(Step);  // push (non-null) fermentation profile step into queue
     }
-    programState |= 0b110100;  //  set PIDs to automatic and enable temperature profile bit
+    programState |= MAIN_PID_MODE + HEAT_PID_MODE + TEMP_PROFILE;  //  set PIDs to automatic and enable temperature profile bit
   }
   root.close();
   ProFile.close();
@@ -1007,7 +1007,7 @@ void tempProfile() {              // manage SP profiles
 
 void tempUnit() {
   char listSize = 2;
-  encoderPos = (programState & 0b001000) >> 3;
+  encoderPos = (programState & DISPLAY_UNIT) >> 3;
   char lastReportedPos = encoderPos + 1;
   lcd.setCursor(0, 2);
   lcd.print(F("                    "));
@@ -1026,8 +1026,8 @@ void tempUnit() {
       lastReportedPos = encoderPos;
     }
   } while (digitalRead(pushButton));
-  if (encoderPos) programState |= 0b001000;
-    else programState &= 0b110111;
+  if (encoderPos) programState |= DISPLAY_UNIT;
+    else programState &= ~DISPLAY_UNIT;
 
   #if DEBUG == true
     if (encoderPos) Serial.print(F("Units set to deg F."));
@@ -1069,11 +1069,11 @@ void avrReset() {
 }
 
 void backOut() {  //  finalize any changes in preparation for menu exit
-  if (programState & 0b100000) mainPID.SetMode(AUTOMATIC);
+  if (programState & MAIN_PID_MODE) mainPID.SetMode(AUTOMATIC);
     else mainPID.SetMode(MANUAL);
-  if (programState & 0b010000) heatPID.SetMode(AUTOMATIC);
+  if (programState & HEAT_PID_MODE) heatPID.SetMode(AUTOMATIC);
     else heatPID.SetMode(MANUAL);
-  if ((programState & 0b000011) == 3) {  // create a new comma seperated value LogFile
+  if ((programState & (DATA_LOGGING + FILE_OPS)) == DATA_LOGGING + FILE_OPS) {  // create a new comma seperated value LogFile
     char filename[] = "LOGGER00.CSV";
     for (int i = 0; i < 100; i++) {
       filename[6] = i/10 + '0';
@@ -1095,7 +1095,7 @@ void backOut() {  //  finalize any changes in preparation for menu exit
     LogFile.println(F("millis,datetime,fridge actual,fridge filter,beer actual,beer filter,mainSP,mainCO,heatSP,heatCO,peak estimator,fridge state"));
     LogFile.flush();  //print header to file
   }
-  if ((programState & 0b000011) == 1) {
+  if ((programState & (DATA_LOGGING + FILE_OPS)) == FILE_OPS) {
     #if DEBUG == true
       Serial.print(F("Logfile closed. "));
       Serial.print(freeRAM());
@@ -1104,7 +1104,7 @@ void backOut() {  //  finalize any changes in preparation for menu exit
 
     LogFile.close();  // close LogFile
   }
-  programState &= 0b111110;  // reset file change flag
+  programState &= ~FILE_OPS;  // reset file change flag
   EEPROMWriteSettings();     // update settings stored in non-volatile memory
 }
 
@@ -1121,7 +1121,7 @@ void EEPROMReadSettings() {  // read settings from EEPROM
   EEPROMRead(34, &heatKd, DOUBLE);
   double* estimator = getPeakEstimatorAddr();
   EEPROMRead(38, &estimator, DOUBLE);
-  if (programState & 0b000010) {  // load previous logfile if data logging active
+  if (programState & DATA_LOGGING) {  // load previous logfile if data logging active
     char filename[] = "LOGGER00.CSV";
     EEPROMRead(42, &filename[6], BYTE); 
     EEPROMRead(43, &filename[7], BYTE);
@@ -1137,7 +1137,7 @@ void EEPROMReadSettings() {  // read settings from EEPROM
       delay(1500);
     }
   }
-  if (programState & 0b000100) {  // load previous profile if active
+  if (programState & TEMP_PROFILE) {  // load previous profile if active
     char filename[] = "/PROFILES/        .PGM";
     for (int i = 0; i++; i < 8) {
       EEPROMRead(44 + i, &filename[10 + i], BYTE);
@@ -1174,7 +1174,7 @@ void EEPROMReadSettings() {  // read settings from EEPROM
         Step.duration = strtod(buff, 0);
         if (Step.temp || Step.duration) profile.push(Step);  // push (non-null) fermentation profile step into queue
       }
-      programState |= 0b110100;  //  set PIDs to automatic and enable temperature profile bit
+      programState |= MAIN_PID_MODE + HEAT_PID_MODE + TEMP_PROFILE;  //  set PIDs to automatic and enable temperature profile bit
     }
     ProFile.close();
     unsigned int step = 0;
@@ -1192,7 +1192,7 @@ void EEPROMReadSettings() {  // read settings from EEPROM
 void EEPROMWriteSettings() {  // write current settings to EEPROM
   byte temp = EEPROM_VER;
   EEPROMWrite(0, &temp, BYTE);
-  EEPROMWrite(1, (byte)(programState & 0b111110), BYTE);
+  EEPROMWrite(1, (byte)(programState & ~FILE_OPS), BYTE);
   EEPROMWrite(2, Setpoint, DOUBLE);
   EEPROMWrite(6, Output, DOUBLE);
   EEPROMWrite(10, Kp, DOUBLE);
@@ -1203,26 +1203,26 @@ void EEPROMWriteSettings() {  // write current settings to EEPROM
   EEPROMWrite(30, heatKi, DOUBLE);
   EEPROMWrite(34, heatKd, DOUBLE);
   EEPROMWrite(38, getPeakEstimator(), DOUBLE);
-  if (programState & 0b000010) {  //  write logfile name to EEPROM if data logging active
+  if (programState & DATA_LOGGING) {  //  write logfile name to EEPROM if data logging active
     EEPROMWrite(42, (byte)LogFile.name()[6], BYTE);
     EEPROMWrite(43, (byte)LogFile.name()[7], BYTE);
   }
 }
 
-void EEPROMWritePresets() {  // save defaults to eeprom
+void EEPROMWritePresets() {      // save defaults to eeprom
   byte temp = EEPROM_VER;
-  EEPROMWrite(0, &temp, BYTE);             // update EEPROM version
-  EEPROMWrite(1, (byte)0b011000, BYTE);    // default programState (main PID manual, heat PID automatic, deg C, no file operations)
-  EEPROMWrite(2, (double)20.00, DOUBLE);   // default main Setpoint
-  EEPROMWrite(6, (double)20.00, DOUBLE);   // default main Output for manual operation
-  EEPROMWrite(10, (double)10.00, DOUBLE);  // default main Kp
-  EEPROMWrite(14, (double)5E-4, DOUBLE);   // default main Ki
-  EEPROMWrite(18, (double)00.00, DOUBLE);  // default main Kd
-  EEPROMWrite(22, (double)00.00, DOUBLE);  // default HEAT Output for manual operation
-  EEPROMWrite(26, (double)05.00, DOUBLE);  // default HEAT Kp
-  EEPROMWrite(30, (double)00.25, DOUBLE);  // default HEAT Ki
-  EEPROMWrite(34, (double)01.15, DOUBLE);  // default HEAT Kd
-  EEPROMWrite(38, (double)05.00, DOUBLE);  // default peakEstimator
+  EEPROMWrite(0, &temp, BYTE);                 // update EEPROM version
+  EEPROMWrite(1, (byte)DISPLAY_UNIT, BYTE);    // default programState (main PID manual, heat PID manual, deg F, no file operations)
+  EEPROMWrite(2, (double)20.00, DOUBLE);       // default main Setpoint
+  EEPROMWrite(6, (double)20.00, DOUBLE);       // default main Output for manual operation
+  EEPROMWrite(10, (double)10.00, DOUBLE);      // default main Kp
+  EEPROMWrite(14, (double)5E-4, DOUBLE);       // default main Ki
+  EEPROMWrite(18, (double)00.00, DOUBLE);      // default main Kd
+  EEPROMWrite(22, (double)00.00, DOUBLE);      // default HEAT Output for manual operation
+  EEPROMWrite(26, (double)05.00, DOUBLE);      // default HEAT Kp
+  EEPROMWrite(30, (double)00.25, DOUBLE);      // default HEAT Ki
+  EEPROMWrite(34, (double)01.15, DOUBLE);      // default HEAT Kd
+  EEPROMWrite(38, (double)05.00, DOUBLE);      // default peakEstimator
 }
 
 void encoderChanA() {  // interrupt for rotary encoder A channel

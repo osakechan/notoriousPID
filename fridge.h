@@ -28,7 +28,7 @@ extern double peakEstimate;      // to determine prediction error = (estimate - 
 extern unsigned long startTime;  // timing variables for enforcing min/max cycling times
 extern unsigned long stopTime;
 
-extern probe fridge, beer;  // external variables define in globals.h
+extern probe fridge, beer;  // external variables declared in globals.h
 extern double Output, heatSetpoint, heatOutput;
 extern const byte relay1, relay2;
 extern byte programState;
