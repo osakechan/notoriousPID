@@ -69,7 +69,7 @@ void setup() {
 
   Wire.begin();              // initialize rtc communication
   RTC.begin();               // start real time clock
-  lcd.createChar(0, (uint8_t*)delta);  // create custom delta characters for LCD (slots 0-7)
+  lcd.createChar(0, (uint8_t*)delta);  // create custom characters for LCD (slots 0-7)
   lcd.createChar(1, (uint8_t*)rightArrow);
   lcd.createChar(2, (uint8_t*)disc);
   lcd.createChar(3, (uint8_t*)circle);
@@ -877,7 +877,7 @@ void dataLog() {
 
       programState += DATA_LOGGING + FILE_OPS;  // start new LogFile on menu exit
     }
-    else if ((programState & (DATA_LOGGING + FILE_OPS) == FILE_OPS) {
+    else if ((programState & (DATA_LOGGING + FILE_OPS)) == FILE_OPS) {
       #if DEBUG == true
         Serial.print(F("Pending close operation canceled... "));
         Serial.print(freeRAM());
