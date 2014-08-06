@@ -103,7 +103,7 @@ const byte relay2 = A3;       // relay 2 (heating element)
 volatile char encoderPos;    // a counter for the rotary encoder dial
 volatile byte encoderState;  // 3 bit-flag encoder state (A Channel)(B Channel)(is rotating)
 
-OneWire onewire(onewireData);  // define instance of the OneWire class to communicate with onewire sensors
+OneWire onewire(onewireData);  // declare instance of the OneWire class to communicate with onewire sensors
 probe beer(&onewire), fridge(&onewire);
 
 byte programState;  // 6 bit-flag program state -- (mainPID manual/auto)(heatPID manual/auto)(temp C/F)(fermentation profile on/off)(data capture on/off)(file operations) = 0b000000
@@ -112,10 +112,10 @@ double heatInput, heatOutput, heatSetpoint, heatKp, heatKi, heatKd;  // SP, PV, 
 PID mainPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);  // main PID instance for beer temp control (DIRECT: beer temperature ~ fridge(air) temperature)
 PID heatPID(&heatInput, &heatOutput, &heatSetpoint, heatKp, heatKi, heatKd, DIRECT);   // create instance of PID class for cascading HEAT control (HEATing is a DIRECT process)
 
-LiquidCrystal lcd(lcd_rs, lcd_enable, lcd_d4, lcd_d5, lcd_d6, lcd_d7);  // define instance of the LiquidCrystal class for 20x4 LCD
-RTC_DS1307 RTC;           // define instance of Real-time Clock class
-File LogFile;             // define datalogging File object
-File ProFile;                      // define fermentation profile File object
+LiquidCrystal lcd(lcd_rs, lcd_enable, lcd_d4, lcd_d5, lcd_d6, lcd_d7);  // declare instance of the LiquidCrystal class for 20x4 LCD
+RTC_DS1307 RTC;           // declare instance of Real-time Clock class
+File LogFile;             // declare datalogging File object
+File ProFile;                      // declare fermentation profile File object
 QueueList <profileStep> profile;   // dynamic queue (FIFO) linked list; contains steps for temperature profile
 
 #endif
