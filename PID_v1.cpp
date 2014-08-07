@@ -54,9 +54,9 @@ bool PID::Compute() {
     double input = *myInput;
     double error = *mySetpoint - input;
     
-    ITerm+= (ki * error);
-    if(ITerm > outMax) ITerm= outMax;
-      else if(ITerm < outMin) ITerm= outMin;
+    ITerm += (ki * error);
+    if (ITerm > outMax) ITerm= outMax;
+      else if (ITerm < outMin) ITerm= outMin;
     double dInput = (History[0] - History[29]) / (5*60);
     PTerm = kp * error;
     DTerm = -kd * dInput;

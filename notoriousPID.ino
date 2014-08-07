@@ -109,7 +109,7 @@ void setup() {
   beer.init();
   
   mainPID.SetTunings(Kp, Ki, Kd);    // set tuning params
-  mainPID.SetSampleTime(1000);       // (ms) matches fast sample rate (1 hz)
+  mainPID.SetSampleTime(1000);       // (ms) matches sample rate (1 hz)
   mainPID.SetOutputLimits(0.3, 38);  // deg C (~32.5 - ~100 deg F)
   if (programState & MAIN_PID_MODE) mainPID.SetMode(AUTOMATIC);  // set man/auto
     else mainPID.SetMode(MANUAL);
@@ -141,7 +141,7 @@ void loop() {
   wdt_reset();                      // reset the watchdog timer (once timer is set/reset, next reset pulse must be sent before timeout or arduino reset will occur)
   static char listSize = 4;         // for constraining rotary encoder position
   static char lastReportedPos = 1;  // default to 1 to force display initialze on first iteration
-  encoderState |= 0b001;            // reset rotary debouncer
+  encoderState |= DEBOUNCE;         // reset rotary debouncer
   if (encoderPos != lastReportedPos) {
     encoderPos = (encoderPos + listSize) % listSize;  // constrain encoder position
     initDisplay();                  // re-init display on encoder position change
@@ -334,12 +334,12 @@ void initDisplay() {
 
 void updateDisplay() {
   lcd.setCursor(9, 0);
-  if (programState & DISPLAY_UNIT) lcd.print(F("\337F "));
-    else lcd.print(F("\337C "));
-  if (programState & TEMP_PROFILE) lcd.print(F("PGM "));
+  if (programState & DISPLAY_UNIT) lcd.write((byte)7);
+    else lcd.write((byte)6);
+  if (programState & TEMP_PROFILE) lcd.print(F(" PGM "));
   else {
-    if (programState & MAIN_PID_MODE) lcd.print(F("A "));
-      else lcd.print(F("M "));
+    if (programState & MAIN_PID_MODE) lcd.print(F(" A "));
+      else lcd.print(F(" M "));
     if (programState & HEAT_PID_MODE) lcd.print(F("A "));
       else lcd.print(F("M "));
   }
@@ -513,7 +513,7 @@ void menu() {
     mainUpdate();
     static char lastReportedPos = 1;
     static char listSize = 8;
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.clear();
@@ -604,7 +604,7 @@ void mainPIDmode() {
   do {
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(3, 2);
@@ -634,7 +634,7 @@ void mainPIDmode() {
     do {  // coarse-grained ajustment (integers)
       wdt_reset();
       mainUpdate();
-      encoderState |= 0b001;
+      encoderState |= DEBOUNCE;
       if (lastReportedPos != encoderPos) {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
@@ -656,7 +656,7 @@ void mainPIDmode() {
     do {  // fine-grained ajustment (tenths)
       wdt_reset();
       mainUpdate();
-      encoderState |= 0b001;
+      encoderState |= DEBOUNCE;
       if (lastReportedPos != encoderPos) {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
@@ -702,7 +702,7 @@ void mainPIDsp() {
   do {  // coarse-grained ajustment (integers)
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(3, 2);
@@ -725,7 +725,7 @@ void mainPIDsp() {
   do {  // fine-grained ajustment (tenths)
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(3, 2);
@@ -768,7 +768,7 @@ void heatPIDmode() {
   do {
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(3, 2);
@@ -798,7 +798,7 @@ void heatPIDmode() {
     do {  // coarse-grained ajustment (integers)
       wdt_reset();
       mainUpdate();
-      encoderState |= 0b001;
+      encoderState |= DEBOUNCE;
       if (lastReportedPos != encoderPos) {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
@@ -821,7 +821,7 @@ void heatPIDmode() {
     do {  // fine-grained ajustment (tenths)
       wdt_reset();
       mainUpdate();
-      encoderState |= 0b001;
+      encoderState |= DEBOUNCE;
       if (lastReportedPos != encoderPos) {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(3, 2);
@@ -858,7 +858,7 @@ void dataLog() {
   do {
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(3, 2);
@@ -921,7 +921,7 @@ void tempProfile() {              // manage SP profiles
     do {
       wdt_reset();
       mainUpdate();
-      encoderState |= 0b001;
+      encoderState |= DEBOUNCE;
       if (lastReportedPos != encoderPos) {
         encoderPos = (encoderPos + listSize) % listSize;
         lcd.setCursor(16, 2);
@@ -956,7 +956,7 @@ void tempProfile() {              // manage SP profiles
   do {
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       do {
         ProFile = root.openNextFile();  // open next file in /profiles/
@@ -1017,7 +1017,7 @@ void tempUnit() {
   do {
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(5, 2);
@@ -1048,7 +1048,7 @@ void avrReset() {
   do {
     wdt_reset();
     mainUpdate();
-    encoderState |= 0b001;
+    encoderState |= DEBOUNCE;
     if (lastReportedPos != encoderPos) {
       encoderPos = (encoderPos + listSize) % listSize;
       lcd.setCursor(9, 2);
@@ -1217,7 +1217,7 @@ void EEPROMWritePresets() {      // save defaults to eeprom
   EEPROMWrite(6, (double)20.00, DOUBLE);       // default main Output for manual operation
   EEPROMWrite(10, (double)10.00, DOUBLE);      // default main Kp
   EEPROMWrite(14, (double)5E-4, DOUBLE);       // default main Ki
-  EEPROMWrite(18, (double)00.00, DOUBLE);      // default main Kd
+  EEPROMWrite(18, (double)500.0, DOUBLE);     // default main Kd
   EEPROMWrite(22, (double)00.00, DOUBLE);      // default HEAT Output for manual operation
   EEPROMWrite(26, (double)05.00, DOUBLE);      // default HEAT Kp
   EEPROMWrite(30, (double)00.25, DOUBLE);      // default HEAT Ki
@@ -1226,20 +1226,20 @@ void EEPROMWritePresets() {      // save defaults to eeprom
 }
 
 void encoderChanA() {  // interrupt for rotary encoder A channel
-  if (encoderState & 0b001) delay (1);  // debounce
-  if (digitalRead(encoderPinA) != ((encoderState & 0b100) >> 2)) {    // make sure signal has changed
-    encoderState = (encoderState & 0b011) + (~encoderState & 0b100);  // update encoderState with new A value
-    if ((encoderState & 0b110) == 4) encoderPos++;  // increment encoder position if A leads B
-    encoderState &= 0b110;  // reset debounce flag
+  if (encoderState & DEBOUNCE) delay (1);  // debounce
+  if (digitalRead(encoderPinA) != ((encoderState & CHAN_A) >> 2)) {    // make sure signal has changed
+    encoderState = (encoderState & ~CHAN_A) + (~encoderState & CHAN_A);  // update encoderState with new A value
+    if ((encoderState & ~DEBOUNCE) == CHAN_A) encoderPos++;  // increment encoder position if A leads B
+    encoderState &= ~DEBOUNCE;  // reset debounce flag
   }
 }
 
 void encoderChanB() {  // interrupt for rotary encoder B channel
-  if (encoderState & 0b001) delay (1);
-  if (digitalRead(encoderPinB) != ((encoderState & 0b010) >> 1)) {
-    encoderState = (encoderState & 0b101) + (~encoderState & 0b010);
-    if ((encoderState & 0b110) == 2) encoderPos--; // decrement encoder position if B leads A
-    encoderState &= 0b110;
+  if (encoderState & DEBOUNCE) delay (1);
+  if (digitalRead(encoderPinB) != ((encoderState & CHAN_B) >> 1)) {
+    encoderState = (encoderState & ~CHAN_B) + (~encoderState & CHAN_B);
+    if ((encoderState & ~DEBOUNCE) == CHAN_B) encoderPos--; // decrement encoder position if B leads A
+    encoderState &= ~DEBOUNCE;
   }
 }
 

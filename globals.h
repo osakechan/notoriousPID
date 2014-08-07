@@ -118,6 +118,9 @@ const byte relay2 = A3;       // relay 2 (heating element)
 
 volatile char encoderPos;    // a counter for the rotary encoder dial
 volatile byte encoderState;  // 3 bit-flag encoder state (A Channel)(B Channel)(is rotating)
+#define CHAN_A 0b100
+#define CHAN_B 0b010
+#define DEBOUNCE 0b001
 
 OneWire onewire(onewireData);  // declare instance of the OneWire class to communicate with onewire sensors
 probe beer(&onewire), fridge(&onewire);
