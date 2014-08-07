@@ -118,8 +118,8 @@ const byte relay2 = A3;       // relay 2 (heating element)
 
 volatile char encoderPos;    // a counter for the rotary encoder dial
 volatile byte encoderState;  // 3 bit-flag encoder state (A Channel)(B Channel)(is rotating)
-#define CHAN_A 0b100
-#define CHAN_B 0b010
+#define CHAN_A   0b100
+#define CHAN_B   0b010
 #define DEBOUNCE 0b001
 
 OneWire onewire(onewireData);  // declare instance of the OneWire class to communicate with onewire sensors
@@ -128,10 +128,10 @@ probe beer(&onewire), fridge(&onewire);
 byte programState;  // 6 bit-flag program state -- (mainPID manual/auto)(heatPID manual/auto)(temp C/F)(fermentation profile on/off)(data capture on/off)(file operations) = 0b000000
 #define MAIN_PID_MODE 0b100000
 #define HEAT_PID_MODE 0b010000
-#define DISPLAY_UNIT 0b001000
-#define TEMP_PROFILE 0b000100
-#define DATA_LOGGING 0b000010
-#define FILE_OPS 0b000001
+#define DISPLAY_UNIT  0b001000
+#define TEMP_PROFILE  0b000100
+#define DATA_LOGGING  0b000010
+#define FILE_OPS      0b000001
 
 double Input, Setpoint, Output, Kp, Ki, Kd;  // SP, PV, CO, tuning params for main PID
 double heatInput, heatOutput, heatSetpoint, heatKp, heatKi, heatKd;  // SP, PV, CO tuning params for HEAT PID
