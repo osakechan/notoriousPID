@@ -18,7 +18,8 @@ notorious PID is an open source fermentation temperature control program for hom
 - [Flexwatt heat tape](http://www.calorique.com/en/flexwatt-heat-tape/)
 
 ###Wiring It Up:
-![nPID wiring diagram](https://raw.githubusercontent.com/osakechan/notorious-PID/master/img/nPID%20wiring%20layout.png)
+####Logic Circuitry:
+![nPID logic wiring](https://raw.githubusercontent.com/osakechan/notorious-PID/master/img/nPID%20wiring%20layout.png)
 
 *a couple notes about the above diagram:*
 - the prototyping shield has been substituted for the adafruit data logging shield (same footprint)
@@ -28,6 +29,9 @@ notorious PID is an open source fermentation temperature control program for hom
 - the onewire data line requires a 4.7kohm pullup (dashed green wire)
 - external power *must* be supplied to the onewire sensors (cannot use parasite power)
 - there is no template for the sainsmart relay board but wiring should be straight-forward
+
+####Power Circuitry:
+![nPID power wiring](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/nPid%20power%20layout.png)
 
 ###Control Overview:
 
