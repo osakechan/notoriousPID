@@ -33,9 +33,10 @@ notorious PID is an open source fermentation temperature control program for hom
 ![nPID power wiring](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/nPid%20power%20layout.png)
 
 *a couple notes about the above diagram:*
-- center outlet provides GFCI protection and is always on (for arduino, circulation fans, etc)
-- plug refrigerator into *cooling* outlet (duh)
-- plug heat element into *heating* outlet (duh)
+- center outlet provides GFCI protection and is always on
+- outlets share common *ground* and *neutral*
+- plug refrigerator into *cooling* outlet
+- plug heat element into *heating* outlet
 - plug arduino (and optional fans) into *GFCI* outlet
 
 ###Control Overview:
