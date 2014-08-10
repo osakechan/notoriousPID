@@ -30,24 +30,14 @@ notorious PID is an open source fermentation temperature control program for hom
 - there is no template for the sainsmart relay board but wiring should be straight-forward
 
 ###Connection List:
-| Hardware | AVR Pin |
-|--------|---|
-| LCD D7 | 4 |
-| LCD D6 | 5 |
-| LCD D5 | 6 |
-| LCD D4 | 7 |
-| LCD Enable | 8 |
-| LCD Reset | 9 |
-| LCD ChipSelect | 10 |
-| LCD MOSI (SPI) | 11 |
-| LCD MISO (SPI) | 12 |
-| LCD SCK (SPI) | 13 |
-| Rotary A Channel | 3 |
-| Rotary B Channel | 4 |
-| Rotary Pushbutton | A0 |
-| OneWire Data | A1 |
-| Relay 1 (fridge) | A2 |
-| Relay 2 (compressor) | A3 |
+| Hardware | AVR Pin || Hardware | AVR Pin |
+|--------|---||--------|---|
+| Rotary A Channel | 3 || LCD D7 | 4 |
+| Rotary B Channel | 4 || LCD D6 | 5 |
+| Rotary Pushbutton | A0 || LCD D5 | 6 |
+| OneWire Data | A1 || LCD D4 | 7 |
+| Relay 1 (fridge) | A2 ||||
+| Relay 2 (compressor) | A3 ||||
 
 ###Power Circuitry:
 ![nPID power wiring](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/nPid%20power%20layout.png)
