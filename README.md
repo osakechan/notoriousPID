@@ -31,7 +31,7 @@ notorious PID is an open source fermentation temperature control program for hom
 
 ###Connection List:
 | Hardware | AVR Pin || Hardware | AVR Pin |
-|--------|---||--------|---|
+|--------|---|-|--------|---|
 | Rotary A Channel | 3 || LCD D7 | 4 |
 | Rotary B Channel | 4 || LCD D6 | 5 |
 | Rotary Pushbutton | A0 || LCD D5 | 6 |
