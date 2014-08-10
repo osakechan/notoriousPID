@@ -18,18 +18,7 @@ notorious PID is an open source fermentation temperature control program for hom
 - [Flexwatt heat tape](http://www.calorique.com/en/flexwatt-heat-tape/)
 
 ###Logic Circuitry:
-![nPID logic wiring](https://raw.githubusercontent.com/osakechan/notorious-PID/master/img/nPID%20wiring%20layout.png)
-
-*a couple notes about the above diagram:*
-- the prototyping shield has been substituted for the adafruit data logging shield (same footprint)
-- this project uses a 20x4 character lcd with backlight (shown is the stock 16x2)
-- the lcd utilizes a trim-pot to adjust contrast (dashed blue wire)
-- the rotary encoder from adafruit incorporates a pushbutton (shown seperate)
-- the onewire data line requires a 4.7kohm pullup (dashed green wire)
-- external power *must* be supplied to the onewire sensors (cannot use parasite power)
-- there is no template for the sainsmart relay board but wiring should be straight-forward
-
-###Connection List:
+#####Connection List:
 | Hardware | AVR Pin |   | HardWare | AVR Pin |
 |---|---|---|---|---|
 | LCD Enable | 8 |   | Rotary A Channel | 3 |
@@ -43,6 +32,16 @@ notorious PID is an open source fermentation temperature control program for hom
 | LCD D5 | 6 |   |   |   |
 | LCD D4 | 7 |   |   |   |
 
+![nPID logic wiring](https://raw.githubusercontent.com/osakechan/notorious-PID/master/img/nPID%20wiring%20layout.png)
+
+*a couple notes about the above diagram:*
+- the prototyping shield has been substituted for the adafruit data logging shield (same footprint)
+- this project uses a 20x4 character lcd with backlight (shown is the stock 16x2)
+- the lcd utilizes a trim-pot to adjust contrast (dashed blue wire)
+- the rotary encoder from adafruit incorporates a pushbutton (shown seperate)
+- the onewire data line requires a 4.7kohm pullup (dashed green wire)
+- external power *must* be supplied to the onewire sensors (cannot use parasite power)
+- there is no template for the sainsmart relay board but wiring should be straight-forward
 
 ###Power Circuitry:
 ![nPID power wiring](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/nPid%20power%20layout.png)
