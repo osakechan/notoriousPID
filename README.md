@@ -36,7 +36,7 @@ notorious PID is an open source fermentation temperature control program for hom
 - center outlet provides project-wide GFCI protection
 - plug refrigerator into *cooling* outlet (duh)
 - plug heat element into *heating* outlet (duh)
-- plug arduino (and optional fans, etc.) into *GFCI* outlet
+- plug arduino (and optional fans, etc.) into *mains* outlet
 
 ###Control Overview:
 
