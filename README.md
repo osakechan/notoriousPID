@@ -17,8 +17,8 @@ notorious PID is an open source fermentation temperature control program for hom
 - [A refrigerator or chest freezer](http://www.craigslist.org/about/sites)
 - [Flexwatt heat tape](http://www.calorique.com/en/flexwatt-heat-tape/)
 
-###Logic Circuitry:
-#####Connection List:
+###Build Aspects:
+#####Logical Wiring:
 | Hardware | AVR Pin |   | HardWare | AVR Pin |
 |---|---|---|---|---|
 | LCD Enable | 8 |   | Rotary A Channel | 3 |
@@ -43,7 +43,7 @@ notorious PID is an open source fermentation temperature control program for hom
 - external power *must* be supplied to the onewire sensors (cannot use parasite power)
 - there is no template for the sainsmart relay board but wiring should be straight-forward
 
-###Power Circuitry:
+#####Power Wiring:
 ![nPID power wiring](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/nPid%20power%20layout.png)
 
 *a couple notes about the above diagram:*
