@@ -1,9 +1,16 @@
 notorious-PID
 =============
-
 PID fermentation control for AVR platforms
 
 notorious PID is an open source fermentation temperature control program for homebrew use.  The code has been developed using the arduino IDE.
+
+###Control Overview:
+
+  A standard PID control algorithm outputs the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements are the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion with up to 12-bit resolution.  Potentially limitless numbers of Dallas OneWire Sensors may be attached via a single digital input in on the AVR.
+
+  **Cooling** --  The refrigerator compressor is switched by a differential control algorithm with time-based overshoot prediction capabilities.
+
+  **Heating** --  A second PID instance outputs a duty cycle for time proportioned control of a resistive heating element lining the inner chamber walls.
 
 ###List of Physical Components:
 
@@ -18,7 +25,7 @@ notorious PID is an open source fermentation temperature control program for hom
 - [Flexwatt heat tape](http://www.calorique.com/en/flexwatt-heat-tape/)
 
 ###Build Aspects:
-#####Logical Wiring:
+#####*Logical Connections:*
 | Hardware | AVR Pin |   | HardWare | AVR Pin |
 |---|---|---|---|---|
 | LCD Enable | 8 |   | Rotary A Channel | 3 |
@@ -32,6 +39,7 @@ notorious PID is an open source fermentation temperature control program for hom
 | LCD D5 | 6 |   |   |   |
 | LCD D4 | 7 |   |   |   |
 
+#####*Logical Schematic:*
 ![nPID logic wiring](https://raw.githubusercontent.com/osakechan/notorious-PID/master/img/nPID%20wiring%20layout.png)
 
 *a couple notes about the above diagram:*
@@ -43,7 +51,7 @@ notorious PID is an open source fermentation temperature control program for hom
 - external power *must* be supplied to the onewire sensors (cannot use parasite power)
 - there is no template for the sainsmart relay board but wiring should be straight-forward
 
-#####Power Wiring:
+#####*Power Schematic:*
 ![nPID power wiring](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/nPid%20power%20layout.png)
 
 *a couple notes about the above diagram:*
@@ -51,14 +59,6 @@ notorious PID is an open source fermentation temperature control program for hom
 - plug refrigerator into *cooling* outlet (duh)
 - plug heat element into *heating* outlet (duh)
 - plug arduino (and optional fans, etc.) into *mains* outlet
-
-###Control Overview:
-
-  A standard PID control algorithm outputs the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements are the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion with up to 12-bit resolution.  Potentially limitless numbers of Dallas OneWire Sensors may be attached via a single digital input in on the AVR.
-
-  **Cooling** --  The refrigerator compressor is switched by a differential control algorithm with time-based overshoot prediction capabilities.
-
-  **Heating** --  A second PID instance outputs a duty cycle for time proportioned control of a resistive heating element lining the inner chamber walls.
 
 ###Additonal Features:
 
