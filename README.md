@@ -29,6 +29,24 @@ notorious PID is an open source fermentation temperature control program for hom
 - external power *must* be supplied to the onewire sensors (cannot use parasite power)
 - there is no template for the sainsmart relay board but wiring should be straight-forward
 
+###Connection List:
+| LCD D7 | Arduino Pin 4 |
+| LCD D6 | Arduino Pin 5 |
+| LCD D5 | Arduino Pin 6 |
+| LCD D4 | Arduino Pin 7 |
+| LCD Enable | Arduino Pin 8 |
+| LCD Reset | Arduino Pin 9 |
+| LCD ChipSelect | Arduino Pin 10 |
+| LCD MOSI (SPI) | Arduino Pin 11 |
+| LCD MISO (SPI) | Arduino Pin 12 |
+| LCD SCK (SPI) | Arduino Pin 13 |
+| Rotary A Channel | Arduino Pin 3 |
+| Rotary B Channel | Arduino Pin 4 |
+| Rotary Pushbutton | Arduino Pin A0 |
+| OneWire Data | Arduino Pin A1 |
+| Relay 1 (fridge) | Arduino Pin A2 |
+| Relay 2 (compressor) | Arduino Pin A3 |
+
 ###Power Circuitry:
 ![nPID power wiring](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/nPid%20power%20layout.png)
 
