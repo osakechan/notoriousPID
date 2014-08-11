@@ -6,9 +6,9 @@ notorious PID is an open source fermentation temperature control program for hom
 
 ###Control Overview:
 
-  A standard PID control algorithm computes the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements consist of the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion to deg C with up to 12-bit resolution (requiring approximately 650ms for conversion at room temperature).  With careful tuning of control parameters, precision control of desired fermentation setpoint within +/- 0.1 deg C is possible.
+  A standard PID control algorithm computes the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements consist of the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion to deg C with up to 12-bit resolution (requiring approximately 650ms for conversion at room temperature).  With careful tuning of control parameters, energy efficient, precision control of desired fermentation setpoint within +/- 0.1 deg C is possible.
 
-  **Cooling** --  The refrigerator compressor is switched by a differential control algorithm with time-based overshoot prediction capabilities.
+  **Cooling** --  The refrigerator compressor is switched by a differential control algorithm with time-based overshoot prediction capabilities.  Cycles are timed to minimize compressor motor stress.
 
   **Heating** --  A second PID instance outputs a duty cycle for time proportioned control of a resistive heating element lining the inner chamber walls.
 
