@@ -6,7 +6,7 @@ notorious PID is an open source fermentation temperature control program for hom
 
 ###Control Overview:
 
-  A standard PID control algorithm outputs the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements are the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion with up to 12-bit resolution.  Potentially limitless numbers of Dallas OneWire Sensors may be attached via a single digital input in on the AVR.
+  A standard PID control algorithm computes the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements consist of the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion with up to 12-bit resolution.
 
   **Cooling** --  The refrigerator compressor is switched by a differential control algorithm with time-based overshoot prediction capabilities.
 
