@@ -643,7 +643,8 @@ void mainPIDmode() {
           else lcd.print(F(" \337C"));
         lastReportedPos = encoderPos;
       }
-      lcd.setCursor(4, 2);
+      if ((encoderPos + Output - int(Output)) < 10) lcd.setCursor(3, 2);
+        else lcd.setCursor(4, 2);
       lcd.cursor();
     } while (digitalRead(pushButton));
     lcd.noCursor();
