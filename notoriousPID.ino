@@ -621,9 +621,10 @@ void mainPIDmode() {
     Serial.println(F(" bytes free SRAM remaining"));
   #endif
 
-  if (encoderPos) {programState |= MAIN_PID_MODE;}  // set main PID to automatic mode
+  if (encoderPos) {programState |= MAIN_PID_MODE; mainPID.SetMode(AUTOMATIC);}  // set main PID to automatic mode
   else {  // set main PID to manual mode; user entry of main Output for manual only
     programState &= ~MAIN_PID_MODE;
+    mainPID.SetMode(MANUAL);
     do {wdt_reset(); mainUpdate();} while (!digitalRead(pushButton));
     char listSize = 100;
     if (programState & DISPLAY_UNIT) Output = probe::tempCtoF(Output);  // if display unit = deg F, convert Output
@@ -785,9 +786,10 @@ void heatPIDmode() {
     Serial.println(F(" bytes free SRAM remaining"));
   #endif
 
-  if (encoderPos) programState |= HEAT_PID_MODE;  // set heat PID to automatic mode
+  if (encoderPos) {programState |= HEAT_PID_MODE; heatPID.SetMode(AUTOMATIC);}  // set heat PID to automatic mode
   else {  // set heat PID to manual mode; user entry of heat Output for manual only
     programState &= ~HEAT_PID_MODE;
+    heatPID.SetMode(MANUAL);
     do {wdt_reset(); mainUpdate();} while (!digitalRead(pushButton));
     char listSize = 100;
     if (programState & DISPLAY_UNIT) heatSetpoint = probe::tempCtoF(heatSetpoint);
@@ -1069,10 +1071,6 @@ void avrReset() {
 }
 
 void backOut() {  //  finalize any changes in preparation for menu exit
-  if (programState & MAIN_PID_MODE) mainPID.SetMode(AUTOMATIC);
-    else mainPID.SetMode(MANUAL);
-  if (programState & HEAT_PID_MODE) heatPID.SetMode(AUTOMATIC);
-    else heatPID.SetMode(MANUAL);
   if ((programState & (DATA_LOGGING + FILE_OPS)) == DATA_LOGGING + FILE_OPS) {  // create a new comma seperated value LogFile
     char filename[] = "LOGGER00.CSV";
     for (int i = 0; i < 100; i++) {
