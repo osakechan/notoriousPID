@@ -10,8 +10,8 @@ notorious PID is an open source fermentation temperature control program for hom
 - [LCD Character Display](https://github.com/osakechan/notoriousPID#lcd-character-display)
 - [Main Display](https://github.com/osakechan/notoriousPID#main-display)
 - [User Menu](https://github.com/osakechan/notoriousPID#user-menu)
-- [List of Physical Components](https://github.com/osakechan/notoriousPID#list-of-physical-components)
 - [Build Aspects](https://github.com/osakechan/notoriousPID#build-aspects)
+- [List of Physical Components](https://github.com/osakechan/notoriousPID#list-of-physical-components)
 - [Logical Connections](https://github.com/osakechan/notoriousPID#logical-connections)
 - [Logical Schematic](https://github.com/osakechan/notoriousPID#logical-schematic)
 - [Power Schematic](https://github.com/osakechan/notoriousPID#power-schematic)
@@ -56,7 +56,7 @@ Pressing the rotary encoder pushbutton activates the user menu.  Normal PID and 
 - back - leave user menu
 
 ###Build Aspects
-###List of Physical Components
+#####*List of Physical Components*
 - [Arduino MEGA 2560](http://arduino.cc/en/Main/arduinoBoardMega2560)
 - [Adafruit data logging shield](http://www.adafruit.com/product/1141)
 - [20x4 character LCD](http://www.adafruit.com/product/198)
