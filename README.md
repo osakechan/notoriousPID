@@ -24,13 +24,34 @@ notorious PID is an open source fermentation temperature control program for hom
   **Heating** --  A second PID instance outputs a duty cycle for time proportioned control of a resistive heating element lining the inner chamber walls.
 
 ###LCD Character Display:
+#####*Main Display Pages*
 [![main page 1](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1.jpg "page 1")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![main page 2](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage2_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/mas&nbsp;&nbsp;ter/img/LCD/nPIDpage2.jpg "page 2")
 
 [![main page 3](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3.jpg "page 3")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![main page 4](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage4_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/i&nbsp;&nbsp;mg/LCD/nPIDpage4.jpg "page 4")
 
+  The main display is divided amongst 4 pages.  A scroll bar on the bottom line of the LCD tracks page selection.  The first page displays an overal view consisting of chamber air temperature, beer tempterature, setpoint and time.  The second and third pages are dedicated to the main and heat PIDs respectively.  These pages allow the user to monitor the individual PID terms (proportional/integral/derivative) and controller output.  The fourth page displays fridge status (idle/cooling/heating), status duration and peak estimator value.  The various program states are displayed across the top line on all main views:
+- display units - (C)elsius | (F)arenheit
+- main PID mode - (M)anual | (A)utomatic
+- heat PID mode - (M)anual | (A)utomatic
+- fridge state - (I)dling | (C)ooling | (H)eating
+- sd status
+
+#####*User Menu*
 [![menu root](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu.jpg "menu")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![menu unit](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT.jpg "display units")
 
 [![menu profile](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM.jpg "temperature profiles")
+
+  Pressing the rotary encoder pushbutton activates the user menu.  Normal PID and fridge tasks continue to run in the background.  The current menu item is indicated by the right arrow and the rotary encoder allows the user to rotate through the list of options and make a selection with the pushbutton:
+- main PID mode - Manual / Automatic
+- main PID output (manual mode required)
+- main PID setpoint
+- heat PID mode - manua / automatic
+- heat PID output (manual mode required)
+- display units - celsius / farenheit
+- sd data logging - enable / disable
+- sd temp profiles - select file / disable
+- restore & reset - restore EEPROM settings to defaults and reset AVR
+- back - leave user menu
 
 ###List of Physical Components:
 
