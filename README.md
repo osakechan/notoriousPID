@@ -44,16 +44,16 @@ The main display is divided amongst 4 pages.  A scroll bar on the bottom line of
 [![menu profile](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM.jpg "temperature profiles")
 
 Pressing the rotary encoder pushbutton activates the user menu.  Normal PID and fridge tasks continue to run in the background.  The current menu item is indicated by the right arrow and the rotary encoder allows the user to rotate through the list of options and make a selection with the pushbutton:
-- main PID mode - Manual / Automatic
+- main PID mode - manual / automatic
 - main PID output (manual mode required)
 - main PID setpoint
-- heat PID mode - manua / automatic
+- heat PID mode - manual / automatic
 - heat PID output (manual mode required)
 - display units - celsius / farenheit
 - sd data logging - enable / disable
 - sd temp profiles - select file / disable
 - restore & reset - restore EEPROM settings to defaults and reset AVR
-- back - leave user menu
+- back - finalize setting changes and leave user menu
 
 ###Build Aspects
 #####*List of Components*
