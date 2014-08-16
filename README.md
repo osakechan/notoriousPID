@@ -23,6 +23,12 @@ notorious PID is an open source fermentation temperature control program for hom
 
   **Heating** --  A second PID instance outputs a duty cycle for time proportioned control of a resistive heating element lining the inner chamber walls.
 
+###LCD Character Display:
+[![main page 1](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1.jpg)&nbsp;&nbsp;[![main page 2](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage2_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage2.jpg)
+[![main page 3](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3.jpg)&nbsp;&nbsp;[![main page 4](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage4_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage4.jpg)
+[![menu root](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu.jpg)&nbsp;&nbsp;[![menu unit](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT.jpg)
+[![menu profile](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM.jpg)
+
 ###List of Physical Components:
 
 - [Arduino MEGA 2560](http://arduino.cc/en/Main/arduinoBoardMega2560)
