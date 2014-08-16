@@ -24,13 +24,13 @@ notorious PID is an open source fermentation temperature control program for hom
   **Heating** --  A second PID instance outputs a duty cycle for time proportioned control of a resistive heating element lining the inner chamber walls.
 
 ###LCD Character Display:
-[![main page 1](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1.jpg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![main page 2](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage2_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/mas&nbsp;&nbsp;ter/img/LCD/nPIDpage2.jpg)
+[![main page 1](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage1.jpg "page 1")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![main page 2](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage2_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/mas&nbsp;&nbsp;ter/img/LCD/nPIDpage2.jpg "page 2")
 
-[![main page 3](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3.jpg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![main page 4](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage4_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/i&nbsp;&nbsp;mg/LCD/nPIDpage4.jpg)
+[![main page 3](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage3.jpg "page 3")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![main page 4](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDpage4_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/i&nbsp;&nbsp;mg/LCD/nPIDpage4.jpg "page 4")
 
-[![menu root](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu.jpg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![menu unit](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT.jpg)
+[![menu root](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenu.jpg "menu")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![menu unit](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuUNIT.jpg "display units")
 
-[![menu profile](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM.jpg)
+[![menu profile](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM_small.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/LCD/nPIDmenuPGM.jpg "temperature profiles")
 
 ###List of Physical Components:
 
