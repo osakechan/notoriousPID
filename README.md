@@ -10,13 +10,13 @@ notorious PID is an open source fermentation temperature control program for hom
 - [LCD Character Display](https://github.com/osakechan/notoriousPID#lcd-character-display)
 - [Main Display](https://github.com/osakechan/notoriousPID#main-display)
 - [User Menu](https://github.com/osakechan/notoriousPID#user-menu)
+- [Additional Features](https://github.com/osakechan/notoriousPID#additonal-features)
+- [Future Features](https://github.com/osakechan/notoriousPID#future-features)
 - [Build Aspects](https://github.com/osakechan/notoriousPID#build-aspects)
 - [List of Components](https://github.com/osakechan/notoriousPID#list-of-components)
 - [Logical Connections](https://github.com/osakechan/notoriousPID#logical-connections)
 - [Logical Schematic](https://github.com/osakechan/notoriousPID#logical-schematic)
 - [Power Schematic](https://github.com/osakechan/notoriousPID#power-schematic)
-- [Additional Features](https://github.com/osakechan/notoriousPID#additonal-features)
-- [Future Features](https://github.com/osakechan/notoriousPID#future-features)
 
 ###Control Overview
 A standard PID control algorithm computes the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements consist of the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion to deg C with up to 12-bit resolution (requiring approximately 650ms for conversion at room temperature).  With careful tuning of control parameters, energy efficient, precision control of desired fermentation setpoint within +/- 0.1 deg C is possible.
@@ -54,6 +54,18 @@ Pressing the rotary encoder pushbutton activates the user menu.  Normal PID and 
 - sd temp profiles - select file / disable
 - restore & reset - restore EEPROM settings to defaults and reset AVR
 - back - finalize setting changes and leave user menu
+
+###Additonal Features
+  **EEPROM storage** -- notorious PID stores vital program states and settings in non-volatile EEPROM memory space.  If power is lost or the arduino reboots via the reset button, previous settings can be recalled from EEPROM at startup.
+
+  **Data Logging** -- Logging functionality is provided by the Adafruit data logging shield.  The shield includes an SD card slot and a real time clock for accurate timestamping of data and files.  Logfiles are formatted as simple CSV with headers.  Logging operations may be enabled/disabled by the end user at any time via the menu.
+  
+  **Temperature Profiles** -- The program includes support for end-user created temperature profiles.  Profiles in CSV format may be placed in the /PROFILES/ directory of the SD card used for data logging.  Files use the 8.3 filename format with .PGM file extension and consist of comma separated pairs of setpoint temperature (deg C) and duration (hours).  During profile operation, main PID setpoint is varied according to the pairs included in the .PGM file.  Profiles may be enabled/disabled via the menu.
+  
+  **Watchdog Failsafe** -- An infinite loop or other AVR lock-up could lead to a loss of control of the final control elements.  To prevent an AVR failure from leading to unsafe operation, notorious PID makes use of the Watchdog timer feature of arduino (and similar) boards.  The Watchdog is an onboard countdown timer that will reboot the arduino if it has not recieved a reset pulse from the AVR within a set time.
+  
+###Future Features
+  **WiFi Connectivity** -- Connectivity to be acomplished via the Adafruit wifi breakout with external antenna.  Data will be viewable online via the Xively service.
 
 ###Build Aspects
 #####*List of Components*
@@ -101,20 +113,6 @@ Pressing the rotary encoder pushbutton activates the user menu.  Normal PID and 
 - plug refrigerator into *cooling* outlet (duh)
 - plug heat element into *heating* outlet (duh)
 - plug arduino (and optional fans, etc.) into *mains* outlet
-
-###Additonal Features
-
-  **EEPROM storage** -- notorious PID stores vital program states and settings in non-volatile EEPROM memory space.  If power is lost or the arduino reboots via the reset button, previous settings can be recalled from EEPROM at startup.
-
-  **Data Logging** -- Logging functionality is provided by the Adafruit data logging shield.  The shield includes an SD card slot and a real time clock for accurate timestamping of data and files.  Logfiles are formatted as simple CSV with headers.  Logging operations may be enabled/disabled by the end user at any time via the menu.
-  
-  **Temperature Profiles** -- The program includes support for end-user created temperature profiles.  Profiles in CSV format may be placed in the /PROFILES/ directory of the SD card used for data logging.  Files use the 8.3 filename format with .PGM file extension and consist of comma separated pairs of setpoint temperature (deg C) and duration (hours).  During profile operation, main PID setpoint is varied according to the pairs included in the .PGM file.  Profiles may be enabled/disabled via the menu.
-  
-  **Watchdog Failsafe** -- An infinite loop or other AVR lock-up could lead to a loss of control of the final control elements.  To prevent an AVR failure from leading to unsafe operation, notorious PID makes use of the Watchdog timer feature of arduino (and similar) boards.  The Watchdog is an onboard countdown timer that will reboot the arduino if it has not recieved a reset pulse from the AVR within a set time.
-  
-###Future Features
-
-  **WiFi Connectivity** -- Connectivity to be acomplished via the Adafruit wifi breakout with external antenna.  Data will be viewable online via the Xively service.
 
 -----------------------
 
