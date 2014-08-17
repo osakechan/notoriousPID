@@ -117,6 +117,7 @@ Pressing the rotary encoder pushbutton activates the user menu.  Normal PID and 
 
 #####*Build Photos*
 [![chamber & controller](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/chamber_controller_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/chamber_controller.jpg)&nbsp;&nbsp;&nbsp;&nbsp;[![controller](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/controller_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/controller.jpg)&nbsp;&nbsp;&nbsp;&nbsp;[![inside chamber view 1](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber1_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber1.jpg)&nbsp;&nbsp;&nbsp;&nbsp;[![inside chamber view 2](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber2_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber2.jpg)
+
 -----------------------
 
 Many thanks go to Elco Jacobs who, without even knowing it, greatly influenced the direction of this project with his work on both [UberFridge](http://www.elcojacobs.com/uberfridge/) and [brewPI](http://www.brewpi.com/).  Also, thanks to the many helpful users on both the Arduino and Adafruit forums!
