@@ -17,6 +17,7 @@ notorious PID is an open source fermentation temperature control program for hom
 - [Logical Connections](https://github.com/osakechan/notoriousPID#logical-connections)
 - [Logical Schematic](https://github.com/osakechan/notoriousPID#logical-schematic)
 - [Power Schematic](https://github.com/osakechan/notoriousPID#power-schematic)
+- [Build Photos](https://github.com/osakechan/notoriousPID#build-photos)
 
 ###Control Overview
 A standard PID control algorithm computes the air temperature necessary to maintain a desired fermentation setpoint. Controller output of the main PID cascades into two additional control algorithms for heating and cooling.  Final control elements consist of the refrigerator compressor and resistive heating element.  Temperature sensing of fermenting beer and chamber air is performed by the Dallas OneWire DS18B20.  The sensor's on-board DAC performs a conversion to deg C with up to 12-bit resolution (requiring approximately 650ms for conversion at room temperature).  With careful tuning of control parameters, energy efficient, precision control of desired fermentation setpoint within +/- 0.1 deg C is possible.
@@ -114,6 +115,8 @@ Pressing the rotary encoder pushbutton activates the user menu.  Normal PID and 
 - plug heat element into *heating* outlet (duh)
 - plug arduino (and optional fans, etc.) into *mains* outlet
 
+#####*Build Photos*
+[![chamber & controller](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/chamber_controller_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/chamber_controller.jpg)&nbsp;&nbsp;&nbsp;&nbsp;[![controller](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/controller_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/controller.jpg)&nbsp;&nbsp;&nbsp;&nbsp;[![inside chamber view 1](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber1_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber1.jpg)&nbsp;&nbsp;&nbsp;&nbsp;[![inside chamber view 2](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber2_thumb.jpg)](https://raw.githubusercontent.com/osakechan/notoriousPID/master/img/BUILD/inside_chamber2.jpg)
 -----------------------
 
 Many thanks go to Elco Jacobs who, without even knowing it, greatly influenced the direction of this project with his work on both [UberFridge](http://www.elcojacobs.com/uberfridge/) and [brewPI](http://www.brewpi.com/).  Also, thanks to the many helpful users on both the Arduino and Adafruit forums!
