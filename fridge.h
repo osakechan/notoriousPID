@@ -13,7 +13,7 @@ enum opState {  // fridge operation states
 };
 
 const double fridgeIdleDiff = 0.5;       // constrain fridge temperature to +/- 0.5 deg C (0.9 deg F) differential
-const double fridgePeakDiff = 0.5;       // constrain allowed peak error to +/- 0.5 deg C (0.9 deg F) differential
+const double fridgePeakDiff = 0.25;      // constrain allowed peak error to +/- 0.25 deg C (0.45 deg F) differential
 const unsigned int coolMinOff = 300;     // minimum compressor off time, seconds (5 min)
 const unsigned int coolMinOn = 90;       // minimum compressor on time, seconds (1.5 min)
 const unsigned int coolMaxOn = 2700;     // maximum compressor on time, seconds (45 min)

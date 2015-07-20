@@ -1,7 +1,7 @@
 #include "fridge.h"
 
 byte fridgeState[2] = { IDLE, IDLE };      // [0] - current fridge state; [1] - fridge state t - 1 history
-double peakEstimator = 25;    // to predict COOL overshoot; units of deg C per hour (always positive)
+double peakEstimator = 30;    // to predict COOL overshoot; units of deg C per hour (always positive)
 double peakEstimate = 0;      // to determine prediction error = (estimate - actual)
 unsigned long startTime = 0;  // timing variables for enforcing min/max cycling times
 unsigned long stopTime = 0;
@@ -40,7 +40,7 @@ void updateFridge() {        // maintain fridge at temperature set by mainPID --
     case COOL:  // run compressor until peak predictor lands on controller Output
       { double runTime = (unsigned long)(millis() - startTime) / 1000;  // runtime in seconds
       if (runTime < coolMinOn) break;     // ensure minimum compressor runtime
-      if (fridge.getFilter() < Output) {  // temp already below output: most likely cause is change in setpoint or long minimum runtime
+      if (fridge.getFilter() < Output - fridgeIdleDiff) {  // temp already below output - idle differential: most likely cause is change in setpoint or long minimum runtime
         updateFridgeState(IDLE, IDLE);    // go IDLE, ignore peaks
         digitalWrite(relay1, HIGH);       // open relay 1; power down fridge compressor
         stopTime = millis();              // record idle start
