@@ -1,7 +1,7 @@
 #include "fridge.h"
 
 byte fridgeState[2] = { IDLE, IDLE };      // [0] - current fridge state; [1] - fridge state t - 1 history
-double peakEstimator = 5;     // to predict COOL overshoot; units of deg F per hour (always positive)
+double peakEstimator = 25;    // to predict COOL overshoot; units of deg C per hour (always positive)
 double peakEstimate = 0;      // to determine prediction error = (estimate - actual)
 unsigned long startTime = 0;  // timing variables for enforcing min/max cycling times
 unsigned long stopTime = 0;
@@ -46,8 +46,8 @@ void updateFridge() {        // maintain fridge at temperature set by mainPID --
         stopTime = millis();              // record idle start
         break;
       }
-      if ((fridge.getFilter() - (min(runTime, peakMaxTime) / 3600) * peakEstimator) <= Output) {  // if estimated peak lands on Output, set IDLE and wait for actual peak
-        peakEstimate = fridge.getFilter() - (runTime / 3600) * peakEstimator;   // record estimated peak prediction
+      if ((fridge.getFilter() - (min(runTime, peakMaxTime) / 3600) * peakEstimator) < Output - fridgeIdleDiff) {  // if estimated peak exceeds Output - differential, set IDLE and wait for actual peak
+        peakEstimate = fridge.getFilter() - (min(runTime, peakMaxTime) / 3600) * peakEstimator;   // record estimated peak prediction
         updateFridgeState(IDLE);     // go IDLE, wait for peak
         digitalWrite(relay1, HIGH);
         stopTime = millis();
@@ -77,7 +77,7 @@ void updateFridge() {        // maintain fridge at temperature set by mainPID --
 }
 
 void tuneEstimator(double* estimator, double error) {  // tune fridge overshoot estimator
-  if (abs(error) <= fridgePeakDiff) return;            // leave estimator unchanged if error falls within peak differential (+/-1 deg)
+  if (abs(error) <= fridgePeakDiff) return;            // leave estimator unchanged if error falls within contstrained peak differential
   if (error > 0) *estimator *= constrain(1.2 + 0.03 * abs(error), 1.2, 1.5);                 // if positive error; increase estimator 20% - 50% relative to error
     else *estimator = max(0.05, *estimator / constrain(1.2 + 0.03 * abs(error), 1.2, 1.5));  // if negative error; decrease estimator 17% - 33% relative to error, constrain to non-zero value
   EEPROMWrite(38, peakEstimator, DOUBLE);              // update estimator value stored in EEPROM
